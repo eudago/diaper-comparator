@@ -1,3 +1,5 @@
+import { m } from "@/paraglide/messages"
+
 export const Trending = () => {
     return (
         <div
@@ -8,13 +10,12 @@ export const Trending = () => {
                     <h2
                         className="text-[#0e141b] dark:text-white text-2xl font-bold tracking-tight"
                     >
-                        Top Rated This Week
+                        {m.trending_title()}
                     </h2>
                     <p
                         className="text-slate-500 dark:text-slate-400 text-sm"
                     >
-                        Best performance &amp; value based on 5k+
-                        parent reviews
+                        {m.trending_subtitle()}
                     </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -34,7 +35,7 @@ export const Trending = () => {
                             <div
                                 className="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full"
                             >
-                                BEST VALUE
+                                {m.badge_best_value()}
                             </div>
                         </div>
                         <div
@@ -59,7 +60,7 @@ export const Trending = () => {
                                 <div
                                     className="text-[10px] text-slate-400 font-bold uppercase"
                                 >
-                                    Per Diaper
+                                    {m.per_diaper()}
                                 </div>
                             </div>
                         </div>
@@ -86,7 +87,7 @@ export const Trending = () => {
                         <button
                             className="w-full py-2.5 rounded-xl border-2 border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all"
                         >
-                            Compare Options
+                            {m.compare_options()}
                         </button>
                     </div>
                     <div
@@ -105,7 +106,7 @@ export const Trending = () => {
                             <div
                                 className="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full"
                             >
-                                ECO PICK
+                                {m.badge_eco_pick()}
                             </div>
                         </div>
                         <div
@@ -130,7 +131,7 @@ export const Trending = () => {
                                 <div
                                     className="text-[10px] text-slate-400 font-bold uppercase"
                                 >
-                                    Per Diaper
+                                    {m.per_diaper()}
                                 </div>
                             </div>
                         </div>
@@ -157,7 +158,7 @@ export const Trending = () => {
                         <button
                             className="w-full py-2.5 rounded-xl border-2 border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all"
                         >
-                            Compare Options
+                            {m.compare_options()}
                         </button>
                     </div>
                     <div
@@ -196,7 +197,7 @@ export const Trending = () => {
                                 <div
                                     className="text-[10px] text-slate-400 font-bold uppercase"
                                 >
-                                    Per Diaper
+                                    {m.per_diaper()}
                                 </div>
                             </div>
                         </div>
@@ -223,7 +224,7 @@ export const Trending = () => {
                         <button
                             className="w-full py-2.5 rounded-xl border-2 border-primary text-primary font-bold text-sm hover:bg-primary hover:text-white transition-all"
                         >
-                            Compare Options
+                            {m.compare_options()}
                         </button>
                     </div>
                 </div>

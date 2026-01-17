@@ -1,14 +1,16 @@
+import { m } from "@/paraglide/messages"
+
 export default function CategorySection() {
     return (
         <div className="px-6 lg:px-40 py-12">
             <div className="max-w-[960px] mx-auto">
                 <div className="flex items-end justify-between mb-8 px-2">
                     <div>
-                        <h2 className="text-[#0e141b] dark:text-white text-2xl font-bold tracking-tight">Shop by Category</h2>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm">Discover the right fit for your baby's needs</p>
+                        <h2 className="text-[#0e141b] dark:text-white text-2xl font-bold tracking-tight">{m.category_title()}</h2>
+                        <p className="text-slate-500 dark:text-slate-400 text-sm">{m.category_subtitle()}</p>
                     </div>
                     <a className="text-primary text-sm font-bold flex items-center gap-1 hover:underline" href="#">
-                        View All <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                        {m.view_all()} <span className="material-symbols-outlined text-sm">arrow_forward</span>
                     </a>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -19,8 +21,8 @@ export default function CategorySection() {
                                 <span className="material-symbols-outlined text-3xl">child_care</span>
                             </div>
                             <div>
-                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">Newborn Essentials</h3>
-                                <p className="text-slate-600 dark:text-slate-400 text-xs">For the softest beginnings</p>
+                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">{m.cat_newborn_title()}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs">{m.cat_newborn_desc()}</p>
                             </div>
                         </div>
                     </div>
@@ -31,8 +33,8 @@ export default function CategorySection() {
                                 <span className="material-symbols-outlined text-3xl">eco</span>
                             </div>
                             <div>
-                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">Earth-Friendly</h3>
-                                <p className="text-slate-600 dark:text-slate-400 text-xs">Sustainable and biodegradable</p>
+                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">{m.cat_eco_title()}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs">{m.cat_eco_desc()}</p>
                             </div>
                         </div>
                     </div>
@@ -43,8 +45,8 @@ export default function CategorySection() {
                                 <span className="material-symbols-outlined text-3xl">nights_stay</span>
                             </div>
                             <div>
-                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">Night-time</h3>
-                                <p className="text-slate-600 dark:text-slate-400 text-xs">Up to 12h protection</p>
+                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">{m.cat_night_title()}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs">{m.cat_night_desc()}</p>
                             </div>
                         </div>
                     </div>
@@ -55,8 +57,8 @@ export default function CategorySection() {
                                 <span className="material-symbols-outlined text-3xl">payments</span>
                             </div>
                             <div>
-                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">Budget Picks</h3>
-                                <p className="text-slate-600 dark:text-slate-400 text-xs">Lowest price per unit</p>
+                                <h3 className="text-[#0e141b] dark:text-white text-lg font-bold leading-tight mb-1">{m.cat_budget_title()}</h3>
+                                <p className="text-slate-600 dark:text-slate-400 text-xs">{m.cat_budget_desc()}</p>
                             </div>
                         </div>
                     </div>
