@@ -9,7 +9,7 @@ export const Route = createFileRoute('/')({ component: App })
 function App() {
 
   return (
-    <div className="flex-1">
+    <div className="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
       <Hero />
       <CategorySection />
       <Trending />

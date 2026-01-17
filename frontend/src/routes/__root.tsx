@@ -72,7 +72,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body className="bg-background-light dark:bg-background-dark text-[#0e141b] dark:text-slate-100 min-h-screen">
         <Header />
         {children}
         <TanStackDevtools
