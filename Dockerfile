@@ -18,17 +18,12 @@ RUN bun run build
 FROM oven/bun:latest AS backend-builder
 WORKDIR /app/backend
 
-# Copy backend configuration files
-COPY backend/package.json backend/pnpm-lock.yaml* backend/pnpm-workspace.yaml ./
-COPY backend/apps/server/package.json ./apps/server/
-# Copy other internal packages if needed, assuming they are in packages/
-COPY backend/packages ./packages
-
-# Install dependencies (including workspace packages)
-RUN bun install
-
-# Copy backend source code
+# Copy backend source code first
+# This ensures bun install has full context of all workspace packages
 COPY backend .
+
+# Install dependencies
+RUN bun install
 
 # Build the server
 WORKDIR /app/backend/apps/server
