@@ -7,6 +7,21 @@ export const EmployeeIdSchema = S.Number.pipe(
 )
 export type EmployeeId = typeof EmployeeIdSchema.Type
 
+export const ProductIdSchema = S.UUID.pipe(
+  S.brand("ProductId")
+)
+export type ProductId = typeof ProductIdSchema.Type
+
+export const RetailerIdSchema = S.UUID.pipe(
+  S.brand("RetailerId")
+)
+export type RetailerId = typeof RetailerIdSchema.Type
+
+export const OfferIdSchema = S.UUID.pipe(
+  S.brand("OfferId")
+)
+export type OfferId = typeof OfferIdSchema.Type
+
 // String-based tag for public API use (e.g., "emp_123")
 export const EmployeeTagSchema = S.String.pipe(
   S.startsWith('emp_'),
@@ -28,13 +43,24 @@ export const EmployeeTypeSchema = S.Literal(
   'hourly'
 )
 
+export const ProductTypeSchema = S.Literal(
+  'diaper',
+  'pants'
+)
+
+export const CountryCodeSchema = S.Literal(
+  'ES',
+  'US'
+)
+export type CountryCode = typeof CountryCodeSchema.Type
+
 export const EmailSchema = S.String.pipe(
-    S.pattern(/^(?!\.)(?!.*\.\.)([a-z0-9_'+\-\.]*)[a-z0-9_'+\-]@([a-z0-9][a-z0-9\-]*\.)+[a-z]{2,}$/i),
-    S.annotations({
-        title: 'Email',
-        description: 'An email with a reasonably valid regex (shamelessly taken from zod)',
-        examples: ['adam@joinwarp.com'],
-    }),
-    S.brand('Email'),
+  S.pattern(/^(?!\.)(?!.*\.\.)([a-z0-9_'+\-\.]*)[a-z0-9_'+\-]@([a-z0-9][a-z0-9\-]*\.)+[a-z]{2,}$/i),
+  S.annotations({
+    title: 'Email',
+    description: 'An email with a reasonably valid regex (shamelessly taken from zod)',
+    examples: ['adam@joinwarp.com'],
+  }),
+  S.brand('Email'),
 )
 export type EmailString = typeof EmailSchema.Type
