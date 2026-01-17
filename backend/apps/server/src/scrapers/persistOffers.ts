@@ -5,7 +5,7 @@ import { ScrapedOffer } from './Scraper'
 import { generateProductId, generateRetailerId } from './utils/canonicalId'
 import { ProductId, RetailerId, OfferId } from '@effect-api-example/shared'
 import { eq } from 'drizzle-orm'
-import { syncProductsToMeilisearch } from './syncMeilisearch'
+import { syncProductsToMeilisearch, syncOffersToMeilisearch } from './syncMeilisearch'
 
 export interface PersistOffersConfig {
     retailerName: string
@@ -101,7 +101,10 @@ export const persistOffers = (
 
         // 4. Sync to Meilisearch
         yield* Effect.catchAll(
-            syncProductsToMeilisearch(Array.from(productIdsToSync)),
+            Effect.all([
+                syncProductsToMeilisearch(Array.from(productIdsToSync)),
+                syncOffersToMeilisearch(Array.from(productIdsToSync)),
+            ], { concurrency: 'unbounded' }),
             (err) => {
                 console.error('Failed to sync to Meilisearch:', err)
                 return Effect.void

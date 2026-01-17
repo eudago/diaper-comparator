@@ -1,7 +1,7 @@
 import { Effect, Layer } from 'effect'
 import { layer as SqlLayer } from '../src/db/SqlLive'
 import { MeilisearchLive } from '../src/services/Meilisearch'
-import { initMeilisearch, syncProductsToMeilisearch } from '../src/scrapers/syncMeilisearch'
+import { initMeilisearch, syncProductsToMeilisearch, syncOffersToMeilisearch } from '../src/scrapers/syncMeilisearch'
 import * as PgDrizzle from '@effect/sql-drizzle/Pg'
 import { products } from '../src/db/schema/products'
 
@@ -16,8 +16,11 @@ const program = Effect.gen(function* () {
         db.select({ id: products.id }).from(products)
     )
 
-    console.log(`Syncing ${allProducts.length} products to Meilisearch...`)
-    yield* syncProductsToMeilisearch(allProducts.map((p) => p.id))
+    console.log(`Syncing ${allProducts.length} products and their offers to Meilisearch...`)
+    yield* Effect.all([
+        syncProductsToMeilisearch(allProducts.map((p) => p.id)),
+        syncOffersToMeilisearch(allProducts.map((p) => p.id)),
+    ], { concurrency: 'unbounded' })
 })
 
 // Provide the layers and run
