@@ -1,20 +1,20 @@
 import { Effect, Layer } from 'effect'
-import { CarrefourScraper } from '../src/scrapers'
+import { CarrefourScraper, MercadonaScraper } from '../src/scrapers'
 import { persistOffers } from '../src/scrapers/persistOffers'
 import { layer as SqlLayer } from '../src/db/SqlLive'
 
 const program = Effect.gen(function* () {
-    console.log(`Running ${CarrefourScraper.retailerName} scraper...`)
+    console.log(`Running ${MercadonaScraper.retailerName} scraper...`)
 
     // Scrape offers
-    const offers = yield* CarrefourScraper.scrape()
+    const offers = yield* MercadonaScraper.scrape()
     console.log(`Found ${offers.length} offers`)
 
     // Persist to database
     const result = yield* persistOffers(offers, {
-        retailerName: CarrefourScraper.retailerName,
-        retailerUrl: 'https://www.carrefour.es',
-        country: CarrefourScraper.country,
+        retailerName: MercadonaScraper.retailerName,
+        retailerUrl: 'https://www.mercadona.es',
+        country: MercadonaScraper.country,
     })
 
     console.log(`Done! Created ${result.productsCreated} products, ${result.offersCreated} offers`)
