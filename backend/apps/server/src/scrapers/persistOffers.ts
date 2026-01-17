@@ -5,6 +5,7 @@ import { ScrapedOffer } from './Scraper'
 import { generateProductId, generateRetailerId } from './utils/canonicalId'
 import { ProductId, RetailerId, OfferId } from '@effect-api-example/shared'
 import { eq } from 'drizzle-orm'
+import { syncProductsToMeilisearch } from './syncMeilisearch'
 
 export interface PersistOffersConfig {
     retailerName: string
@@ -49,12 +50,14 @@ export const persistOffers = (
 
         // 2. Upsert Products and Insert Offers
         const scrapedAt = new Date()
+        const productIdsToSync = new Set<ProductId>()
         let productsCreated = 0
         let offersCreated = 0
 
         for (const offer of scrapedOffers) {
             // Generate canonical product ID
             const productId = (yield* Effect.promise(() => generateProductId(offer, config.country))) as ProductId
+            productIdsToSync.add(productId)
 
             // Check if product exists
             const existingProduct = yield* Effect.tryPromise(() =>
@@ -95,6 +98,15 @@ export const persistOffers = (
         }
 
         console.log(`Persisted: ${productsCreated} new products, ${offersCreated} offers`)
+
+        // 4. Sync to Meilisearch
+        yield* Effect.catchAll(
+            syncProductsToMeilisearch(Array.from(productIdsToSync)),
+            (err) => {
+                console.error('Failed to sync to Meilisearch:', err)
+                return Effect.void
+            }
+        )
 
         return {
             retailerId,
