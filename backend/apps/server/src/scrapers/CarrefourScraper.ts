@@ -89,8 +89,6 @@ export const CarrefourScraper: Scraper = {
                 // Get JSON response
                 const data = (yield* response.json) as CarrefourApiResponse
 
-                console.log('Carrefour API response:', JSON.stringify(data, null, 2))
-
                 const items: CarrefourItem[] = data.results.items
 
                 // Map Carrefour items to ScrapedOffer format
