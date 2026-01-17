@@ -73,7 +73,7 @@ export default function Sidebar() {
                                 className="flex items-center gap-3 cursor-pointer"
                             >
                                 <input
-                                    checked=""
+                                    defaultChecked
                                     className="rounded text-primary focus:ring-primary"
                                     type="checkbox"
                                 />
@@ -98,7 +98,7 @@ export default function Sidebar() {
                                 className="flex items-center gap-3 cursor-pointer"
                             >
                                 <input
-                                    checked=""
+                                    defaultChecked
                                     className="rounded text-primary focus:ring-primary"
                                     type="checkbox"
                                 />
@@ -139,7 +139,7 @@ export default function Sidebar() {
                                 className="flex items-center gap-3 cursor-pointer"
                             >
                                 <input
-                                    checked=""
+                                    defaultChecked
                                     className="rounded text-primary focus:ring-primary"
                                     type="checkbox"
                                 />
@@ -556,7 +556,7 @@ export default function Sidebar() {
                                     className="flex items-center gap-2 cursor-pointer group"
                                 >
                                     <input
-                                        checked=""
+                                        defaultChecked
                                         className="rounded border-slate-300 text-primary focus:ring-primary"
                                         type="checkbox"
                                     />

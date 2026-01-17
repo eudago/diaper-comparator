@@ -15,7 +15,7 @@ export default function Header() {
         </Link>
         <div className="flex flex-1 justify-end gap-8 items-center">
           <nav className="hidden md:flex items-center gap-8">
-            <a className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Compare</a>
+            <Link to="/compare" className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors">Compare</Link>
             <Link
               to="/deals"
               className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
