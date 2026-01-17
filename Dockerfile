@@ -1,33 +1,37 @@
 # Stage 1: Build Frontend
-FROM oven/bun:latest AS frontend-builder
+FROM node:20-slim AS frontend-builder
 WORKDIR /app/frontend
+
+# Enable pnpm
+RUN corepack enable
 
 # Copy frontend configuration files
 COPY frontend/package.json frontend/pnpm-lock.yaml* ./
 
 # Install dependencies
-RUN bun install
+RUN pnpm install
 
 # Copy frontend source code
 COPY frontend .
 
 # Build the frontend
-RUN bun run build
+RUN pnpm run build
 
 # Stage 2: Build Backend
-FROM oven/bun:latest AS backend-builder
+FROM node:20-slim AS backend-builder
 WORKDIR /app/backend
 
-# Copy backend source code first
-# This ensures bun install has full context of all workspace packages
+# Install bun (needed for building) and pnpm
+RUN npm install -g bun pnpm
+
+# Copy backend source code
 COPY backend .
 
-# Install dependencies
-RUN bun install
+# Install dependencies using pnpm (respects pnpm-lock.yaml and workspaces)
+RUN pnpm install --frozen-lockfile
 
-# Build the server
-WORKDIR /app/backend/apps/server
-RUN bun run build
+# Build the workspace (dependencies first, then server)
+RUN pnpm run build
 
 # Stage 3: Production Runner
 FROM oven/bun:latest
