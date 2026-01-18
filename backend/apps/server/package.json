@@ -9,6 +9,7 @@
     "db:generate": "pnpm drizzle-kit generate",
     "db:migrate": "pnpm drizzle-kit migrate",
     "db:seed": "bun run scripts/seed.ts",
+    "db:studio": "pnpm drizzle-kit studio",
     "client:example": "bun run scripts/client-example.ts"
   },
   "author": "@rankincodes",
@@ -35,6 +36,7 @@
     "@opentelemetry/sdk-trace-node": "^2.2.0",
     "@opentelemetry/sdk-trace-web": "^2.2.0",
     "drizzle-orm": "0.44.6",
-    "effect": "3.19.13"
+    "effect": "3.19.13",
+    "meilisearch": "^0.55.0"
   }
 }
