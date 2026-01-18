@@ -1,6 +1,6 @@
 import Sidebar from '@/components/deals/Sidebar'
 import { createFileRoute } from '@tanstack/react-router'
-import { InstantSearch, Hits, useInstantSearch } from 'react-instantsearch'
+import { InstantSearch, Hits, useInstantSearch, Pagination } from 'react-instantsearch'
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import ProductCard from '@/components/deals/ProductCard'
 
@@ -62,6 +62,18 @@ function RouteComponent() {
                 list: 'grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6'
               }}
             />
+            <div className="mt-12 flex justify-center">
+              <Pagination
+                classNames={{
+                  root: 'flex justify-center',
+                  list: 'flex gap-2',
+                  item: 'flex',
+                  link: 'w-10 h-10 flex items-center justify-center rounded-lg border border-[#e7edf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-[#0e141b] dark:text-white transition-colors hover:bg-slate-50 dark:hover:bg-slate-700',
+                  selectedItem: '[&>a]:bg-primary [&>a]:text-white [&>a]:border-primary',
+                  disabledItem: 'opacity-50 cursor-not-allowed pointer-events-none'
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
