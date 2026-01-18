@@ -18,7 +18,7 @@ const program = Effect.gen(function* () {
 
     console.log(`Syncing ${allProducts.length} products and their offers to Meilisearch...`)
     yield* Effect.all([
-        syncProductsToMeilisearch(allProducts.map((p) => p.id)),
+        // syncProductsToMeilisearch(allProducts.map((p) => p.id)),
         syncOffersToMeilisearch(allProducts.map((p) => p.id)),
     ], { concurrency: 'unbounded' })
 })

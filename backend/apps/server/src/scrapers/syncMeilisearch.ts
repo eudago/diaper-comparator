@@ -23,6 +23,10 @@ export const initMeilisearch = () =>
                 sortableAttributes: ['minPrice', 'minPricePerUnit', 'updatedAt'],
             })
         )
+        // Ensure primary key is set
+        yield* Effect.tryPromise(() => client.createIndex('products', { primaryKey: 'id' })).pipe(
+            Effect.catchAll(() => Effect.void)
+        )
 
         // Offers index settings
         const offersIndex = client.index('offers')
@@ -32,6 +36,10 @@ export const initMeilisearch = () =>
                 searchableAttributes: ['brand', 'model', 'line', 'retailer'],
                 sortableAttributes: ['price', 'pricePerUnit', 'scrapedAt'],
             })
+        )
+        // Ensure primary key is set
+        yield* Effect.tryPromise(() => client.createIndex('offers', { primaryKey: 'id' })).pipe(
+            Effect.catchAll(() => Effect.void)
         )
     })
 
@@ -153,6 +161,8 @@ export const syncOffersToMeilisearch = (productIds: ProductId[]) =>
             stock: offer.stock,
             scrapedAt: offer.scrapedAt.getTime(),
         }))
+
+        console.log(documents)
 
         if (documents.length > 0) {
             console.log(`Syncing ${documents.length} individual offers to Meilisearch...`)
