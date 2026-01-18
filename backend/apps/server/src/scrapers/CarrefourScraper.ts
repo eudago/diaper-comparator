@@ -138,6 +138,7 @@ export const CarrefourScraper: Scraper = {
                         pricePerUnit: parsePrice(item.price_per_unit),
                         productUrl: `https://www.carrefour.es${item.url}`,
                         inStock: item.units_in_stock > 0,
+                        imageUrl: item.images.desktop,
                     }
                 })
 

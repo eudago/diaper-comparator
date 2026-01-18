@@ -5,8 +5,8 @@ import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import ProductCard from '@/components/deals/ProductCard'
 
 const { searchClient } = instantMeiliSearch(
-  'http://localhost:7700',
-  '198e86bc8d48a97e7c5cf5f0367faf4388d57f82c2767c311b8f7e115b9fb9fb'
+  'https://meilisearch.movieimpostor.site',
+  'fa97bf7b6be21c224537075120904e06d66d677d9d3a9802442a615cfb34dd22'
 ) as any
 
 export const Route = createFileRoute('/deals/')({

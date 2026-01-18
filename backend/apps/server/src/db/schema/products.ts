@@ -56,6 +56,7 @@ export const offers = pgTable('offers', {
     price: decimal().notNull(), // Assuming price in currency units
     pricePerUnit: decimal('price_per_unit').notNull(),
     productUrl: varchar('product_url').notNull(),
+    imageUrl: varchar('image_url'),
     stock: boolean().notNull(),
     scrapedAt: timestamp('scraped_at').notNull(),
     createdAt: timestamp('created_at').defaultNow().notNull(),

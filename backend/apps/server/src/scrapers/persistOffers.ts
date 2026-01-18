@@ -90,6 +90,7 @@ export const persistOffers = (
                     price: String(offer.price),
                     pricePerUnit: String(offer.pricePerUnit),
                     productUrl: offer.productUrl,
+                    imageUrl: offer.imageUrl,
                     stock: offer.inStock,
                     scrapedAt,
                 })

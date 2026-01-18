@@ -27,6 +27,8 @@ export interface ScrapedOffer {
     productUrl: string
     /** Whether the product is in stock */
     inStock: boolean
+    /** URL to the product image */
+    imageUrl?: string
 }
 
 /**

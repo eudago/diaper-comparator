@@ -140,6 +140,7 @@ export const MercadonaScraper: Scraper = {
                         pricePerUnit: parseFloat(product.price_instructions.reference_price),
                         productUrl: `https://tienda.mercadona.es/product/${product.id}/${product.slug}`,
                         inStock: true,
+                        imageUrl: product.thumbnail,
                     }
                 })
 

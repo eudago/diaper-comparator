@@ -18,6 +18,7 @@ interface OfferHit {
     productUrl: string
     stock: boolean
     scrapedAt: number
+    imageUrl: string
 }
 
 interface ProductCardProps {
@@ -25,6 +26,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ hit }) => {
+    const imageUrl = hit.imageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuCNw6ka-jvNvN__M4bymsJhj_kmFXFcorVkddRCiiTUAtRo-XLZRDtqDS9kZXLtxym0SHu9MsfuqIzXKAXOjDx1T-FfgcEl8UsydVy4d0TB6zFwOoE0ZStxqTngN13n9iNwYCrd_bt4s5hbBfuO0cWB2maDvkIOspnBQkEi0h12mcnpF_DiJ94QCiMak5HUuY65EeWFsR1fqGSoUiO_p9yZINrlwPlmECNdjgi5KXEMSqIgmJuK_EEi65gBcpAh9LI73vK0aQvD_Q'
+
     return (
         <div
             className="bg-white dark:bg-slate-800 rounded-xl border border-[#e7edf3] dark:border-slate-700 overflow-hidden flex flex-col hover:shadow-lg transition-shadow"
@@ -35,7 +38,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ hit }) => {
                 <img
                     alt={hit.model}
                     className="max-h-full object-contain mix-blend-multiply dark:mix-blend-normal"
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNw6ka-jvNvN__M4bymsJhj_kmFXFcorVkddRCiiTUAtRo-XLZRDtqDS9kZXLtxym0SHu9MsfuqIzXKAXOjDx1T-FfgcEl8UsydVy4d0TB6zFwOoE0ZStxqTngN13n9iNwYCrd_bt4s5hbBfuO0cWB2maDvkIOspnBQkEi0h12mcnpF_DiJ94QCiMak5HUuY65EeWFsR1fqGSoUiO_p9yZINrlwPlmECNdjgi5KXEMSqIgmJuK_EEi65gBcpAh9LI73vK0aQvD_Q"
+                    src={imageUrl}
                 />
                 {hit.pricePerUnit < 0.25 && (
                     <div

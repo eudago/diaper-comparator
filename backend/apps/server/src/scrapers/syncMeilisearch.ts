@@ -89,6 +89,7 @@ export const syncProductsToMeilisearch = (productIds: ProductId[]) =>
         const documents = Object.values(grouped).map(({ product, offers }) => {
             const prices = offers.map((o) => parseFloat(o.price))
             const ppu = offers.map((o) => parseFloat(o.pricePerUnit))
+            const imageUrl = offers.find(o => o.imageUrl)?.imageUrl || null
 
             return {
                 id: product.id,
@@ -106,6 +107,7 @@ export const syncProductsToMeilisearch = (productIds: ProductId[]) =>
                 maxPricePerUnit: ppu.length > 0 ? Math.max(...ppu) : null,
                 retailers: Array.from(new Set(offers.map((o) => o.retailerName).filter(Boolean))),
                 offerCount: offers.length,
+                imageUrl,
                 updatedAt: Date.now(),
             }
         })
@@ -158,6 +160,7 @@ export const syncOffersToMeilisearch = (productIds: ProductId[]) =>
             price: parseFloat(offer.price),
             pricePerUnit: parseFloat(offer.pricePerUnit),
             productUrl: offer.productUrl,
+            imageUrl: offer.imageUrl,
             stock: offer.stock,
             scrapedAt: offer.scrapedAt.getTime(),
         }))
