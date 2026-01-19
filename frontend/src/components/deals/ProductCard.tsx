@@ -1,3 +1,4 @@
+import { Link } from '@tanstack/react-router'
 import React from 'react'
 
 interface OfferHit {
@@ -55,11 +56,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ hit }) => {
                     >
                         {hit.brand}
                     </h3>
-                    <p
-                        className="text-base font-semibold text-[#0e141b] dark:text-white leading-tight"
-                    >
-                        {hit.model} {hit.size}, {hit.unitsPerPackage} Count
-                    </p>
+                    <Link to={`/product/${hit.productId}`}>
+                        <p
+                            className="text-base font-semibold text-[#0e141b] dark:text-white leading-tight"
+                        >
+                            {hit.model} {hit.size}, {hit.unitsPerPackage} Count
+                        </p>
+                    </Link>
                 </div>
                 <div className="flex items-center gap-1">
                     <div className="flex text-yellow-400">

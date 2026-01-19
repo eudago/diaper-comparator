@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DealsIndexRouteImport } from './routes/deals/index'
 import { Route as CompareIndexRouteImport } from './routes/compare/index'
+import { Route as ProductPostIdRouteImport } from './routes/product/$postId'
 import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
 
 const IndexRoute = IndexRouteImport.update({
@@ -29,6 +30,11 @@ const CompareIndexRoute = CompareIndexRouteImport.update({
   path: '/compare/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProductPostIdRoute = ProductPostIdRouteImport.update({
+  id: '/product/$postId',
+  path: '/product/$postId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DemoI18nRoute = DemoI18nRouteImport.update({
   id: '/demo/i18n',
   path: '/demo/i18n',
@@ -38,12 +44,14 @@ const DemoI18nRoute = DemoI18nRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
+  '/product/$postId': typeof ProductPostIdRoute
   '/compare': typeof CompareIndexRoute
   '/deals': typeof DealsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
+  '/product/$postId': typeof ProductPostIdRoute
   '/compare': typeof CompareIndexRoute
   '/deals': typeof DealsIndexRoute
 }
@@ -51,20 +59,28 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
+  '/product/$postId': typeof ProductPostIdRoute
   '/compare/': typeof CompareIndexRoute
   '/deals/': typeof DealsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/i18n' | '/compare' | '/deals'
+  fullPaths: '/' | '/demo/i18n' | '/product/$postId' | '/compare' | '/deals'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/i18n' | '/compare' | '/deals'
-  id: '__root__' | '/' | '/demo/i18n' | '/compare/' | '/deals/'
+  to: '/' | '/demo/i18n' | '/product/$postId' | '/compare' | '/deals'
+  id:
+    | '__root__'
+    | '/'
+    | '/demo/i18n'
+    | '/product/$postId'
+    | '/compare/'
+    | '/deals/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoI18nRoute: typeof DemoI18nRoute
+  ProductPostIdRoute: typeof ProductPostIdRoute
   CompareIndexRoute: typeof CompareIndexRoute
   DealsIndexRoute: typeof DealsIndexRoute
 }
@@ -92,6 +108,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/product/$postId': {
+      id: '/product/$postId'
+      path: '/product/$postId'
+      fullPath: '/product/$postId'
+      preLoaderRoute: typeof ProductPostIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/i18n': {
       id: '/demo/i18n'
       path: '/demo/i18n'
@@ -105,6 +128,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoI18nRoute: DemoI18nRoute,
+  ProductPostIdRoute: ProductPostIdRoute,
   CompareIndexRoute: CompareIndexRoute,
   DealsIndexRoute: DealsIndexRoute,
 }
