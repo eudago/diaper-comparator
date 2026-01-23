@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DealsIndexRouteImport } from './routes/deals/index'
 import { Route as CompareIndexRouteImport } from './routes/compare/index'
+import { Route as BuyingGuideIndexRouteImport } from './routes/buying-guide/index'
 import { Route as ProductPostIdRouteImport } from './routes/product/$postId'
 import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
 
@@ -30,6 +31,11 @@ const CompareIndexRoute = CompareIndexRouteImport.update({
   path: '/compare/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BuyingGuideIndexRoute = BuyingGuideIndexRouteImport.update({
+  id: '/buying-guide/',
+  path: '/buying-guide/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductPostIdRoute = ProductPostIdRouteImport.update({
   id: '/product/$postId',
   path: '/product/$postId',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
   '/product/$postId': typeof ProductPostIdRoute
+  '/buying-guide': typeof BuyingGuideIndexRoute
   '/compare': typeof CompareIndexRoute
   '/deals': typeof DealsIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
   '/product/$postId': typeof ProductPostIdRoute
+  '/buying-guide': typeof BuyingGuideIndexRoute
   '/compare': typeof CompareIndexRoute
   '/deals': typeof DealsIndexRoute
 }
@@ -60,19 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/demo/i18n': typeof DemoI18nRoute
   '/product/$postId': typeof ProductPostIdRoute
+  '/buying-guide/': typeof BuyingGuideIndexRoute
   '/compare/': typeof CompareIndexRoute
   '/deals/': typeof DealsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/demo/i18n' | '/product/$postId' | '/compare' | '/deals'
+  fullPaths:
+    | '/'
+    | '/demo/i18n'
+    | '/product/$postId'
+    | '/buying-guide'
+    | '/compare'
+    | '/deals'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/demo/i18n' | '/product/$postId' | '/compare' | '/deals'
+  to:
+    | '/'
+    | '/demo/i18n'
+    | '/product/$postId'
+    | '/buying-guide'
+    | '/compare'
+    | '/deals'
   id:
     | '__root__'
     | '/'
     | '/demo/i18n'
     | '/product/$postId'
+    | '/buying-guide/'
     | '/compare/'
     | '/deals/'
   fileRoutesById: FileRoutesById
@@ -81,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DemoI18nRoute: typeof DemoI18nRoute
   ProductPostIdRoute: typeof ProductPostIdRoute
+  BuyingGuideIndexRoute: typeof BuyingGuideIndexRoute
   CompareIndexRoute: typeof CompareIndexRoute
   DealsIndexRoute: typeof DealsIndexRoute
 }
@@ -108,6 +131,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CompareIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/buying-guide/': {
+      id: '/buying-guide/'
+      path: '/buying-guide'
+      fullPath: '/buying-guide'
+      preLoaderRoute: typeof BuyingGuideIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product/$postId': {
       id: '/product/$postId'
       path: '/product/$postId'
@@ -129,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DemoI18nRoute: DemoI18nRoute,
   ProductPostIdRoute: ProductPostIdRoute,
+  BuyingGuideIndexRoute: BuyingGuideIndexRoute,
   CompareIndexRoute: CompareIndexRoute,
   DealsIndexRoute: DealsIndexRoute,
 }
