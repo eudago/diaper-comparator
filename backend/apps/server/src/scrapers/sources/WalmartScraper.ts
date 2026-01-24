@@ -29,7 +29,7 @@ interface WalmartResponse {
                                 variantPriceString: string
                             }
                         },
-                        unitPrice: {
+                        unitPrice?: {
                             currencyUnit: string
                             price: number
                             priceDisplay: string
@@ -39,7 +39,7 @@ interface WalmartResponse {
                             variantPriceString: string
                         }
                     }[]
-                }
+                }[]
             }
         }
     }
@@ -54,12 +54,49 @@ export const WalmartScraper: Scraper = {
         Effect.gen(function* () {
             const client = yield* HttpClient.HttpClient
 
-            const response = yield* client.execute(HttpClientRequest.get(WALMART_API_URL))
+            const baseRequest = HttpClientRequest.get(WALMART_API_URL).pipe(
+                HttpClientRequest.setHeaders({
+                    'accept': 'application/json',
+                    'accept-language': 'en-US',
+                    'baggage': "trafficType=customer,deviceType=desktop,renderScope=CSR,webRequestSource=Browser,pageName=searchResults,isomorphicSessionId=3uiLSFNzFzsR8kGyiYs6z,renderViewId=6dc5b45c-1c62-4af6-8da2-491375723fe1,requestTs=1769253186105,tpid=00-188da6661b82e25bda208724181ce56b-ca2463c2319f2d4a-00",
+                    'downlink': '10',
+                    'traceparent': '00-188da6661b82e25bda208724181ce56b-ca2463c2319f2d4a-00',
+                    'wm-client-traceid': '188da61f34b4c15bf43b5bc30c9e8ac5',
+                    'tenant-id': 'elh9ie',
+                    'wm_page_url': 'https://www.walmart.com/search?q=diapers&typeahead=diapers&page=2&affinityOverride=store_led',
+                    'dpr': '1',
+                    'priority': 'u=1, i',
+                    'sec-ch-ua': '"Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Linux"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-origin',
+                    'wm_mp': 'true',
+                    'wm_qos.correlation_id': 'ImBDUYdm4Dg-wUCS-O-fyZ2cFjW8SnC7VrfW',
+                    'x-apollo-operation-name': 'Search',
+                    'x-enable-server-timing': '1',
+                    'x-latency-trace': '1',
+                    'x-o-bu': 'WALMART-US',
+                    'x-o-ccm': 'server',
+                    'x-o-correlation-id': 'ImBDUYdm4Dg-wUCS-O-fyZ2cFjW8SnC7VrfW',
+                    'x-o-gql-query': 'query Search',
+                    'x-o-mart': 'B2C',
+                    'x-o-platform': 'rweb',
+                    'x-o-platform-version': 'usweb-1.238.0-19a15d910bb75de77ae38ba850b631fc69bea9a3-D20644r',
+                    'x-o-segment': 'oaoh',
+                })
+            )
+
+            const response = yield* client.execute(baseRequest)
+
             const data = (yield* response.json) as WalmartResponse
 
-            console.log(`Walmart API returned ${data.data.search.searchResult.itemStacks.itemsV2.length} products`)
+            console.log(data)
 
-            return data.data.search.searchResult.itemStacks.itemsV2.map((item) => {
+            console.log(`Walmart API returned ${data.data.search.searchResult.itemStacks[0].itemsV2.length} products`)
+
+            return data.data.search.searchResult.itemStacks[0].itemsV2.filter((item) => item.unitPrice !== undefined).map((item) => {
                 return {
                     brand: item.sellerName,
                     model: item.name,
@@ -69,8 +106,8 @@ export const WalmartScraper: Scraper = {
                     unitsPerPackage: 1,
                     type: 'diaper' as const,
                     price: item.priceInfo.currentPrice.price,
-                    pricePerUnit: item.unitPrice.price,
-                    productUrl: item.canonicalUrl,
+                    pricePerUnit: item.unitPrice!.price,
+                    productUrl: `https://www.walmart.com/${item.canonicalUrl}`,
                     inStock: true,
                     imageUrl: item.imageInfo.thumbnailUrl
                 }
