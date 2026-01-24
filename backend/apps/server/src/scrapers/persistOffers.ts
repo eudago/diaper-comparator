@@ -54,6 +54,8 @@ export const persistOffers = (
         let productsCreated = 0
         let offersCreated = 0
 
+        console.log(scrapedOffers)
+
         for (const offer of scrapedOffers) {
             // Generate canonical product ID
             const productId = (yield* Effect.promise(() => generateProductId(offer, config.country))) as ProductId

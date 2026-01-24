@@ -27,16 +27,16 @@ interface WalmartResponse {
                                 priceType: string
                                 supportText: string
                                 variantPriceString: string
+                            },
+                            unitPrice?: {
+                                currencyUnit: string
+                                price: number
+                                priceDisplay: string
+                                priceString: string
+                                priceType: string
+                                supportText: string
+                                variantPriceString: string
                             }
-                        },
-                        unitPrice?: {
-                            currencyUnit: string
-                            price: number
-                            priceDisplay: string
-                            priceString: string
-                            priceType: string
-                            supportText: string
-                            variantPriceString: string
                         }
                     }[]
                 }[]
@@ -96,7 +96,7 @@ export const WalmartScraper: Scraper = {
 
             console.log(`Walmart API returned ${data.data.search.searchResult.itemStacks[0].itemsV2.length} products`)
 
-            return data.data.search.searchResult.itemStacks[0].itemsV2.filter((item) => item.unitPrice !== undefined).map((item) => {
+            return data.data.search.searchResult.itemStacks[0].itemsV2.filter((item) => item.priceInfo.unitPrice !== undefined).map((item) => {
                 return {
                     brand: item.sellerName,
                     model: item.name,
@@ -106,7 +106,7 @@ export const WalmartScraper: Scraper = {
                     unitsPerPackage: 1,
                     type: 'diaper' as const,
                     price: item.priceInfo.currentPrice.price,
-                    pricePerUnit: item.unitPrice!.price,
+                    pricePerUnit: item.priceInfo.unitPrice!.price,
                     productUrl: `https://www.walmart.com/${item.canonicalUrl}`,
                     inStock: true,
                     imageUrl: item.imageInfo.thumbnailUrl
