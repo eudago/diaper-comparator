@@ -9,7 +9,7 @@ const { searchClient } = instantMeiliSearch(
   'fa97bf7b6be21c224537075120904e06d66d677d9d3a9802442a615cfb34dd22'
 ) as any
 
-export const Route = createFileRoute('/deals/')({
+export const Route = createFileRoute('/$locale/deals/')({
   component: RouteComponent,
 })
 

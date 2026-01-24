@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { getLocale } from '@/paraglide/runtime'
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false)
@@ -35,7 +36,11 @@ export default function Header() {
   return (
     <>
       <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7edf3] dark:border-slate-800 px-6 py-4 lg:px-40 bg-white dark:bg-background-dark sticky top-0 z-50">
-        <Link to="/" className="flex items-center gap-3 text-primary">
+        <Link
+          to="/$locale"
+          params={{ locale: getLocale() }}
+          className="flex items-center gap-3 text-primary"
+        >
           <div className="size-8">
             <svg
               fill="currentColor"
@@ -52,19 +57,22 @@ export default function Header() {
         <div className="flex flex-1 justify-end gap-8 items-center">
           <nav className="hidden md:flex items-center gap-8">
             <Link
-              to="/compare"
+              to="/$locale/compare"
+              params={{ locale: getLocale() }}
               className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             >
               Compare
             </Link>
             <Link
-              to="/deals"
+              to="/$locale/deals"
+              params={{ locale: getLocale() }}
               className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             >
               Deals
             </Link>
             <Link
-              to="/buying-guide"
+              to="/$locale/buying-guide"
+              params={{ locale: getLocale() }}
               className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
             >
               Buying Guide

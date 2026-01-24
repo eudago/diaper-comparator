@@ -9,159 +9,187 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DealsIndexRouteImport } from './routes/deals/index'
-import { Route as CompareIndexRouteImport } from './routes/compare/index'
-import { Route as BuyingGuideIndexRouteImport } from './routes/buying-guide/index'
-import { Route as ProductPostIdRouteImport } from './routes/product/$postId'
-import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
+import { Route as LocaleRouteImport } from './routes/$locale'
+import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as LocaleDealsIndexRouteImport } from './routes/$locale/deals/index'
+import { Route as LocaleCompareIndexRouteImport } from './routes/$locale/compare/index'
+import { Route as LocaleBuyingGuideIndexRouteImport } from './routes/$locale/buying-guide/index'
+import { Route as LocaleProductPostIdRouteImport } from './routes/$locale/product/$postId'
+import { Route as LocaleDemoI18nRouteImport } from './routes/$locale/demo.i18n'
 
-const IndexRoute = IndexRouteImport.update({
+const LocaleRoute = LocaleRouteImport.update({
+  id: '/$locale',
+  path: '/$locale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const DealsIndexRoute = DealsIndexRouteImport.update({
+const LocaleDealsIndexRoute = LocaleDealsIndexRouteImport.update({
   id: '/deals/',
   path: '/deals/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const CompareIndexRoute = CompareIndexRouteImport.update({
+const LocaleCompareIndexRoute = LocaleCompareIndexRouteImport.update({
   id: '/compare/',
   path: '/compare/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const BuyingGuideIndexRoute = BuyingGuideIndexRouteImport.update({
+const LocaleBuyingGuideIndexRoute = LocaleBuyingGuideIndexRouteImport.update({
   id: '/buying-guide/',
   path: '/buying-guide/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const ProductPostIdRoute = ProductPostIdRouteImport.update({
+const LocaleProductPostIdRoute = LocaleProductPostIdRouteImport.update({
   id: '/product/$postId',
   path: '/product/$postId',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const DemoI18nRoute = DemoI18nRouteImport.update({
+const LocaleDemoI18nRoute = LocaleDemoI18nRouteImport.update({
   id: '/demo/i18n',
   path: '/demo/i18n',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => LocaleRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/product/$postId': typeof ProductPostIdRoute
-  '/buying-guide': typeof BuyingGuideIndexRoute
-  '/compare': typeof CompareIndexRoute
-  '/deals': typeof DealsIndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
+  '/$locale/product/$postId': typeof LocaleProductPostIdRoute
+  '/$locale/buying-guide': typeof LocaleBuyingGuideIndexRoute
+  '/$locale/compare': typeof LocaleCompareIndexRoute
+  '/$locale/deals': typeof LocaleDealsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/product/$postId': typeof ProductPostIdRoute
-  '/buying-guide': typeof BuyingGuideIndexRoute
-  '/compare': typeof CompareIndexRoute
-  '/deals': typeof DealsIndexRoute
+  '/$locale': typeof LocaleIndexRoute
+  '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
+  '/$locale/product/$postId': typeof LocaleProductPostIdRoute
+  '/$locale/buying-guide': typeof LocaleBuyingGuideIndexRoute
+  '/$locale/compare': typeof LocaleCompareIndexRoute
+  '/$locale/deals': typeof LocaleDealsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/product/$postId': typeof ProductPostIdRoute
-  '/buying-guide/': typeof BuyingGuideIndexRoute
-  '/compare/': typeof CompareIndexRoute
-  '/deals/': typeof DealsIndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
+  '/$locale/product/$postId': typeof LocaleProductPostIdRoute
+  '/$locale/buying-guide/': typeof LocaleBuyingGuideIndexRoute
+  '/$locale/compare/': typeof LocaleCompareIndexRoute
+  '/$locale/deals/': typeof LocaleDealsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
-    | '/demo/i18n'
-    | '/product/$postId'
-    | '/buying-guide'
-    | '/compare'
-    | '/deals'
+    | '/$locale'
+    | '/$locale/'
+    | '/$locale/demo/i18n'
+    | '/$locale/product/$postId'
+    | '/$locale/buying-guide'
+    | '/$locale/compare'
+    | '/$locale/deals'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
-    | '/demo/i18n'
-    | '/product/$postId'
-    | '/buying-guide'
-    | '/compare'
-    | '/deals'
+    | '/$locale'
+    | '/$locale/demo/i18n'
+    | '/$locale/product/$postId'
+    | '/$locale/buying-guide'
+    | '/$locale/compare'
+    | '/$locale/deals'
   id:
     | '__root__'
-    | '/'
-    | '/demo/i18n'
-    | '/product/$postId'
-    | '/buying-guide/'
-    | '/compare/'
-    | '/deals/'
+    | '/$locale'
+    | '/$locale/'
+    | '/$locale/demo/i18n'
+    | '/$locale/product/$postId'
+    | '/$locale/buying-guide/'
+    | '/$locale/compare/'
+    | '/$locale/deals/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DemoI18nRoute: typeof DemoI18nRoute
-  ProductPostIdRoute: typeof ProductPostIdRoute
-  BuyingGuideIndexRoute: typeof BuyingGuideIndexRoute
-  CompareIndexRoute: typeof CompareIndexRoute
-  DealsIndexRoute: typeof DealsIndexRoute
+  LocaleRoute: typeof LocaleRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/$locale': {
+      id: '/$locale'
+      path: '/$locale'
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/': {
+      id: '/$locale/'
       path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/'
+      preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/deals/': {
-      id: '/deals/'
+    '/$locale/deals/': {
+      id: '/$locale/deals/'
       path: '/deals'
-      fullPath: '/deals'
-      preLoaderRoute: typeof DealsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/deals'
+      preLoaderRoute: typeof LocaleDealsIndexRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/compare/': {
-      id: '/compare/'
+    '/$locale/compare/': {
+      id: '/$locale/compare/'
       path: '/compare'
-      fullPath: '/compare'
-      preLoaderRoute: typeof CompareIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/compare'
+      preLoaderRoute: typeof LocaleCompareIndexRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/buying-guide/': {
-      id: '/buying-guide/'
+    '/$locale/buying-guide/': {
+      id: '/$locale/buying-guide/'
       path: '/buying-guide'
-      fullPath: '/buying-guide'
-      preLoaderRoute: typeof BuyingGuideIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/buying-guide'
+      preLoaderRoute: typeof LocaleBuyingGuideIndexRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/product/$postId': {
-      id: '/product/$postId'
+    '/$locale/product/$postId': {
+      id: '/$locale/product/$postId'
       path: '/product/$postId'
-      fullPath: '/product/$postId'
-      preLoaderRoute: typeof ProductPostIdRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/product/$postId'
+      preLoaderRoute: typeof LocaleProductPostIdRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/demo/i18n': {
-      id: '/demo/i18n'
+    '/$locale/demo/i18n': {
+      id: '/$locale/demo/i18n'
       path: '/demo/i18n'
-      fullPath: '/demo/i18n'
-      preLoaderRoute: typeof DemoI18nRouteImport
-      parentRoute: typeof rootRouteImport
+      fullPath: '/$locale/demo/i18n'
+      preLoaderRoute: typeof LocaleDemoI18nRouteImport
+      parentRoute: typeof LocaleRoute
     }
   }
 }
 
+interface LocaleRouteChildren {
+  LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleDemoI18nRoute: typeof LocaleDemoI18nRoute
+  LocaleProductPostIdRoute: typeof LocaleProductPostIdRoute
+  LocaleBuyingGuideIndexRoute: typeof LocaleBuyingGuideIndexRoute
+  LocaleCompareIndexRoute: typeof LocaleCompareIndexRoute
+  LocaleDealsIndexRoute: typeof LocaleDealsIndexRoute
+}
+
+const LocaleRouteChildren: LocaleRouteChildren = {
+  LocaleIndexRoute: LocaleIndexRoute,
+  LocaleDemoI18nRoute: LocaleDemoI18nRoute,
+  LocaleProductPostIdRoute: LocaleProductPostIdRoute,
+  LocaleBuyingGuideIndexRoute: LocaleBuyingGuideIndexRoute,
+  LocaleCompareIndexRoute: LocaleCompareIndexRoute,
+  LocaleDealsIndexRoute: LocaleDealsIndexRoute,
+}
+
+const LocaleRouteWithChildren =
+  LocaleRoute._addFileChildren(LocaleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DemoI18nRoute: DemoI18nRoute,
-  ProductPostIdRoute: ProductPostIdRoute,
-  BuyingGuideIndexRoute: BuyingGuideIndexRoute,
-  CompareIndexRoute: CompareIndexRoute,
-  DealsIndexRoute: DealsIndexRoute,
+  LocaleRoute: LocaleRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

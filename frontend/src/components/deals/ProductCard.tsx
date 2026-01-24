@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import React from 'react'
+import { getLocale } from '@/paraglide/runtime'
 
 interface OfferHit {
     id: string
@@ -56,7 +57,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ hit }) => {
                     >
                         {hit.brand}
                     </h3>
-                    <Link to={`/product/${hit.productId}`}>
+                    <Link
+                        to="/$locale/product/$postId"
+                        params={{ locale: getLocale(), postId: hit.productId }}
+                    >
                         <p
                             className="text-base font-semibold text-[#0e141b] dark:text-white leading-tight"
                         >

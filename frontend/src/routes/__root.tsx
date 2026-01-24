@@ -1,6 +1,7 @@
 import {
   Outlet,
   createRootRouteWithContext,
+  redirect,
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
@@ -19,7 +20,17 @@ interface MyRouterContext {
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
+    // Redirect / to /en-us/
+    if (location.pathname === '/') {
+      throw redirect({
+        to: '/$locale',
+        params: {
+          locale: 'en-us',
+        },
+      })
+    }
+
     // Other redirect strategies are possible; see
     // https://github.com/TanStack/router/tree/main/examples/react/i18n-paraglide#offline-redirect
     if (typeof document !== 'undefined') {

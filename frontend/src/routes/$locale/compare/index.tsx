@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-export const Route = createFileRoute('/compare/')({
+export const Route = createFileRoute('/$locale/compare/')({
   component: RouteComponent,
 })
 
