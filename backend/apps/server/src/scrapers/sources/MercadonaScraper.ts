@@ -1,6 +1,6 @@
 import { Effect, pipe } from 'effect'
 import { HttpClient, HttpClientRequest, FetchHttpClient } from '@effect/platform'
-import { ScrapedOffer, Scraper, ScraperError } from './Scraper'
+import { ScrapedOffer, Scraper, ScraperError } from '../Scraper'
 
 const MERCADONA_ALGOLIA_URL = 'https://7uzjkl1dj0-dsn.algolia.net/1/indexes/products_prod_2004_es/query'
 const ALGOLIA_API_KEY = '9d8f2e39e90df472b4f2e559a116fe17'

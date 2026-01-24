@@ -1,5 +1,5 @@
 import { Effect, Layer } from 'effect'
-import { CarrefourScraper, MercadonaScraper } from '../src/scrapers'
+import { MercadonaScraper } from '../src/scrapers/sources/MercadonaScraper'
 import { persistOffers } from '../src/scrapers/persistOffers'
 import { layer as SqlLayer } from '../src/db/SqlLive'
 import { MeilisearchLive } from '../src/services/Meilisearch'

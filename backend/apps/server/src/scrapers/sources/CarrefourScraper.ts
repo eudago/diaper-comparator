@@ -1,6 +1,6 @@
 import { Effect, pipe } from 'effect'
 import { HttpClient, HttpClientRequest, FetchHttpClient } from '@effect/platform'
-import { ScrapedOffer, Scraper, ScraperError } from './Scraper'
+import { ScrapedOffer, Scraper, ScraperError } from '../Scraper'
 
 const CARREFOUR_API_URL = 'https://www.carrefour.es/cloud-api/plp-food-papi/v1/supermercado/bebe/panales/cat20050/c'
 
