@@ -3,7 +3,15 @@ import * as PgDrizzle from '@effect/sql-drizzle/Pg'
 import { products, offers, retailers } from '../db/schema/products'
 import { eq, inArray } from 'drizzle-orm'
 import { MeilisearchService } from '../services/Meilisearch'
-import { ProductId } from '@effect-api-example/shared'
+import { ProductId, CountryCode } from '@effect-api-example/shared'
+
+const COUNTRY_INDEX_MAP: Record<CountryCode, string> = {
+    ES: 'es',
+    US: 'us-en'
+}
+
+const getIndexName = (base: 'products' | 'offers', country: CountryCode) =>
+    `${base}_${COUNTRY_INDEX_MAP[country]}`
 
 /**
  * Initializes Meilisearch index settings.
@@ -12,35 +20,41 @@ export const initMeilisearch = () =>
     Effect.gen(function* () {
         const { client } = yield* MeilisearchService
 
-        console.log('Initializing Meilisearch index settings...')
+        console.log('Initializing Meilisearch index settings for all countries...')
 
-        // Products index settings
-        const productsIndex = client.index('products')
-        yield* Effect.tryPromise(() =>
-            productsIndex.updateSettings({
-                filterableAttributes: ['brand', 'retailers', 'type', 'size', 'country'],
-                searchableAttributes: ['brand', 'model', 'line'],
-                sortableAttributes: ['minPrice', 'minPricePerUnit', 'updatedAt'],
-            })
-        )
-        // Ensure primary key is set
-        yield* Effect.tryPromise(() => client.createIndex('products', { primaryKey: 'id' })).pipe(
-            Effect.catchAll(() => Effect.void)
-        )
+        for (const country of Object.keys(COUNTRY_INDEX_MAP) as CountryCode[]) {
+            const suffix = COUNTRY_INDEX_MAP[country]
 
-        // Offers index settings
-        const offersIndex = client.index('offers')
-        yield* Effect.tryPromise(() =>
-            offersIndex.updateSettings({
-                filterableAttributes: ['brand', 'retailer', 'type', 'size', 'country', 'stock'],
-                searchableAttributes: ['brand', 'model', 'line', 'retailer'],
-                sortableAttributes: ['price', 'pricePerUnit', 'scrapedAt'],
-            })
-        )
-        // Ensure primary key is set
-        yield* Effect.tryPromise(() => client.createIndex('offers', { primaryKey: 'id' })).pipe(
-            Effect.catchAll(() => Effect.void)
-        )
+            // Products index settings
+            const productsIndexName = `products_${suffix}`
+            const productsIndex = client.index(productsIndexName)
+            yield* Effect.tryPromise(() =>
+                productsIndex.updateSettings({
+                    filterableAttributes: ['brand', 'retailers', 'type', 'size', 'country'],
+                    searchableAttributes: ['brand', 'model', 'line'],
+                    sortableAttributes: ['minPrice', 'minPricePerUnit', 'updatedAt'],
+                })
+            )
+            // Ensure primary key is set
+            yield* Effect.tryPromise(() => client.createIndex(productsIndexName, { primaryKey: 'id' })).pipe(
+                Effect.catchAll(() => Effect.void)
+            )
+
+            // Offers index settings
+            const offersIndexName = `offers_${suffix}`
+            const offersIndex = client.index(offersIndexName)
+            yield* Effect.tryPromise(() =>
+                offersIndex.updateSettings({
+                    filterableAttributes: ['brand', 'retailer', 'type', 'size', 'country', 'stock'],
+                    searchableAttributes: ['brand', 'model', 'line', 'retailer'],
+                    sortableAttributes: ['price', 'pricePerUnit', 'scrapedAt'],
+                })
+            )
+            // Ensure primary key is set
+            yield* Effect.tryPromise(() => client.createIndex(offersIndexName, { primaryKey: 'id' })).pipe(
+                Effect.catchAll(() => Effect.void)
+            )
+        }
     })
 
 /**
@@ -52,7 +66,6 @@ export const syncProductsToMeilisearch = (productIds: ProductId[]) =>
 
         const db = yield* PgDrizzle.PgDrizzle
         const { client } = yield* MeilisearchService
-        const index = client.index('products')
 
         // Fetch products with their current offers and retailer names
         const rows = yield* Effect.tryPromise(() =>
@@ -112,9 +125,19 @@ export const syncProductsToMeilisearch = (productIds: ProductId[]) =>
             }
         })
 
-        if (documents.length > 0) {
-            console.log(`Syncing ${documents.length} products to Meilisearch...`)
-            yield* Effect.tryPromise(() => index.addDocuments(documents))
+        // Group documents by country
+        const byCountry = documents.reduce((acc, doc) => {
+            const country = doc.country as CountryCode
+            if (!acc[country]) acc[country] = []
+            acc[country].push(doc)
+            return acc
+        }, {} as Record<CountryCode, typeof documents>)
+
+        for (const [country, docs] of Object.entries(byCountry)) {
+            const indexName = getIndexName('products', country as CountryCode)
+            console.log(`Syncing ${docs.length} products to Meilisearch index: ${indexName}...`)
+            const index = client.index(indexName)
+            yield* Effect.tryPromise(() => index.addDocuments(docs))
         }
     })
 
@@ -128,7 +151,6 @@ export const syncOffersToMeilisearch = (productIds: ProductId[]) =>
 
         const db = yield* PgDrizzle.PgDrizzle
         const { client } = yield* MeilisearchService
-        const index = client.index('offers')
 
         // Fetch all offers for these products with product and retailer info
         const rows = yield* Effect.tryPromise(() =>
@@ -165,10 +187,18 @@ export const syncOffersToMeilisearch = (productIds: ProductId[]) =>
             scrapedAt: offer.scrapedAt.getTime(),
         }))
 
-        console.log(documents)
+        // Group documents by country
+        const byCountry = documents.reduce((acc, doc) => {
+            const country = doc.country as CountryCode
+            if (!acc[country]) acc[country] = []
+            acc[country].push(doc)
+            return acc
+        }, {} as Record<CountryCode, typeof documents>)
 
-        if (documents.length > 0) {
-            console.log(`Syncing ${documents.length} individual offers to Meilisearch...`)
-            yield* Effect.tryPromise(() => index.addDocuments(documents))
+        for (const [country, docs] of Object.entries(byCountry)) {
+            const indexName = getIndexName('offers', country as CountryCode)
+            console.log(`Syncing ${docs.length} individual offers to Meilisearch index: ${indexName}...`)
+            const index = client.index(indexName)
+            yield* Effect.tryPromise(() => index.addDocuments(docs))
         }
     })

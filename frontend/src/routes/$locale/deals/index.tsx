@@ -32,8 +32,12 @@ function SearchStats() {
 }
 
 function RouteComponent() {
+  const { locale } = Route.useParams()
+  const countrySuffix = locale === 'es' ? 'es' : 'us-en'
+  const indexName = `offers_${countrySuffix}`
+
   return (
-    <InstantSearch indexName="offers" searchClient={searchClient}>
+    <InstantSearch indexName={indexName} searchClient={searchClient}>
       <div className='max-w-[1440px] mx-auto px-4 md:px-10 py-6'>
         <div className="flex flex-wrap gap-2 py-2 mb-4">
           <a className="text-[#4e7397] text-sm font-medium hover:underline" href="#">Home</a>
