@@ -72,5 +72,16 @@
     "buying_guide_cta_subtitle": "Rastreamos los precios diarios de los principales minoristas como Amazon, Walmart y Target para garantizar que nunca pague de más por los artículos de su bebé.",
     "buying_guide_cta_button_compare": "Comparar Precios Ahora",
     "buying_guide_cta_button_alerts": "Configurar Alertas de Precio",
-    "buying_guide_learn_more": "Aprender Más"
+    "buying_guide_learn_more": "Aprender Más",
+    "brands_badge": "Marcas de Confianza",
+    "brands_title": "Explora las Mejores Marcas de Pañales",
+    "brands_subtitle": "Descubre todas las marcas disponibles, compara sus características y encuentra las mejores ofertas para tu bebé.",
+    "brands_all_brands": "Todas las Marcas",
+    "brands_count": "{count} marcas disponibles",
+    "brands_products": "productos",
+    "brands_view_deals": "Ver ofertas",
+    "brands_cta_title": "¿No encuentras tu marca favorita?",
+    "brands_cta_subtitle": "Estamos constantemente añadiendo nuevas marcas. Mientras tanto, explora nuestras ofertas o compara productos.",
+    "brands_cta_button_deals": "Ver Todas las Ofertas",
+    "brands_cta_button_compare": "Comparar Productos"
 }

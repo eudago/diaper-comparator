@@ -72,5 +72,16 @@
   "buying_guide_cta_subtitle": "We track daily prices from top retailers like Amazon, Walmart, and Target to ensure you never overpay for your baby's essentials.",
   "buying_guide_cta_button_compare": "Compare Prices Now",
   "buying_guide_cta_button_alerts": "Setup Price Alerts",
-  "buying_guide_learn_more": "Learn More"
+  "buying_guide_learn_more": "Learn More",
+  "brands_badge": "Trusted Brands",
+  "brands_title": "Explore Diaper Brands",
+  "brands_subtitle": "Discover the most trusted diaper brands worldwide. Compare features, read reviews, and find the perfect fit for your baby.",
+  "brands_all_brands": "All Brands",
+  "brands_count": "{count} brands available",
+  "brands_products": "products",
+  "brands_view_deals": "View Deals",
+  "brands_cta_title": "Can't decide which brand to choose?",
+  "brands_cta_subtitle": "Use our comparison tool to see side-by-side features, prices, and parent reviews for any brands you're considering.",
+  "brands_cta_button_deals": "Browse All Deals",
+  "brands_cta_button_compare": "Compare Brands"
 }

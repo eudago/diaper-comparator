@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LocaleRouteImport } from './routes/$locale'
 import { Route as LocaleIndexRouteImport } from './routes/$locale/index'
+import { Route as LocaleBrandsRouteImport } from './routes/$locale/brands'
 import { Route as LocaleDealsIndexRouteImport } from './routes/$locale/deals/index'
 import { Route as LocaleCompareIndexRouteImport } from './routes/$locale/compare/index'
 import { Route as LocaleBuyingGuideIndexRouteImport } from './routes/$locale/buying-guide/index'
@@ -25,6 +26,11 @@ const LocaleRoute = LocaleRouteImport.update({
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleBrandsRoute = LocaleBrandsRouteImport.update({
+  id: '/brands',
+  path: '/brands',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleDealsIndexRoute = LocaleDealsIndexRouteImport.update({
@@ -55,6 +61,7 @@ const LocaleDemoI18nRoute = LocaleDemoI18nRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/brands': typeof LocaleBrandsRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
   '/$locale/product/$postId': typeof LocaleProductPostIdRoute
@@ -63,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/$locale/deals': typeof LocaleDealsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/$locale/brands': typeof LocaleBrandsRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
   '/$locale/product/$postId': typeof LocaleProductPostIdRoute
@@ -73,6 +81,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/brands': typeof LocaleBrandsRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/demo/i18n': typeof LocaleDemoI18nRoute
   '/$locale/product/$postId': typeof LocaleProductPostIdRoute
@@ -84,6 +93,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/$locale'
+    | '/$locale/brands'
     | '/$locale/'
     | '/$locale/demo/i18n'
     | '/$locale/product/$postId'
@@ -92,6 +102,7 @@ export interface FileRouteTypes {
     | '/$locale/deals'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/$locale/brands'
     | '/$locale'
     | '/$locale/demo/i18n'
     | '/$locale/product/$postId'
@@ -101,6 +112,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/$locale'
+    | '/$locale/brands'
     | '/$locale/'
     | '/$locale/demo/i18n'
     | '/$locale/product/$postId'
@@ -127,6 +139,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/brands': {
+      id: '/$locale/brands'
+      path: '/brands'
+      fullPath: '/$locale/brands'
+      preLoaderRoute: typeof LocaleBrandsRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/deals/': {
@@ -168,6 +187,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleRouteChildren {
+  LocaleBrandsRoute: typeof LocaleBrandsRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleDemoI18nRoute: typeof LocaleDemoI18nRoute
   LocaleProductPostIdRoute: typeof LocaleProductPostIdRoute
@@ -177,6 +197,7 @@ interface LocaleRouteChildren {
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
+  LocaleBrandsRoute: LocaleBrandsRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleDemoI18nRoute: LocaleDemoI18nRoute,
   LocaleProductPostIdRoute: LocaleProductPostIdRoute,

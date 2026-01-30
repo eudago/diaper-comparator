@@ -71,6 +71,13 @@ export default function Header() {
               Deals
             </Link>
             <Link
+              to="/$locale/brands"
+              params={{ locale: getLocale() }}
+              className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
+            >
+              Brands
+            </Link>
+            <Link
               to="/$locale/buying-guide"
               params={{ locale: getLocale() }}
               className="text-[#0e141b] dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors"
