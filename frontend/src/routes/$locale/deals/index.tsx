@@ -1,6 +1,6 @@
 import Sidebar from '@/components/deals/Sidebar'
 import { createFileRoute } from '@tanstack/react-router'
-import { InstantSearch, Hits, useInstantSearch, Pagination } from 'react-instantsearch'
+import { InstantSearch, Hits, useInstantSearch, Pagination, useSortBy } from 'react-instantsearch'
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import ProductCard from '@/components/deals/ProductCard'
 
@@ -33,13 +33,36 @@ function SearchStats() {
   )
 }
 
+function SortBySelect({ indexName }: { indexName: string }) {
+  const { currentRefinement, options, refine } = useSortBy({
+    items: [
+      { label: 'Price per Unit: Low to High', value: `${indexName}:pricePerUnit:asc` },
+      { label: 'Price per Unit: High to Low', value: `${indexName}:pricePerUnit:desc` },
+    ],
+  });
+
+  return (
+    <select
+      className="rounded-lg border-[#e7edf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-[#0e141b] dark:text-white focus:ring-primary"
+      value={currentRefinement}
+      onChange={(e) => refine(e.target.value)}
+    >
+      {options.map((option) => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 function RouteComponent() {
   const { locale } = Route.useParams()
   const countrySuffix = locale === 'es' ? 'es' : 'us-en'
   const indexName = `offers_${countrySuffix}`
 
   return (
-    <InstantSearch indexName={indexName} searchClient={searchClient}>
+    <InstantSearch indexName={indexName} searchClient={searchClient} routing>
       <div className='max-w-[1440px] mx-auto px-4 md:px-10 py-6'>
         <div className="flex flex-wrap gap-2 py-2 mb-4">
           <a className="text-[#4e7397] text-sm font-medium hover:underline" href="#">Home</a>
@@ -51,12 +74,7 @@ function RouteComponent() {
           <SearchStats />
           <div className="flex items-center gap-3">
             <p className="text-sm font-medium text-[#4e7397]">Sort by:</p>
-            <select className="rounded-lg border-[#e7edf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-medium text-[#0e141b] dark:text-white focus:ring-primary">
-              <option>Price per Unit: Low to High</option>
-              <option>Price per Unit: High to Low</option>
-              <option>Top Rated</option>
-              <option>Newest Arrivals</option>
-            </select>
+            <SortBySelect indexName={indexName} />
           </div>
         </div>
 
