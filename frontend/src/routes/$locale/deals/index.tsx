@@ -1,6 +1,6 @@
 import Sidebar from '@/components/deals/Sidebar'
 import { createFileRoute } from '@tanstack/react-router'
-import { InstantSearch, Hits, useInstantSearch, Pagination, useSortBy } from 'react-instantsearch'
+import { InstantSearch, Hits, useInstantSearch, Pagination, useSortBy, SearchBox } from 'react-instantsearch'
 import { instantMeiliSearch } from '@meilisearch/instant-meilisearch'
 import ProductCard from '@/components/deals/ProductCard'
 
@@ -72,9 +72,24 @@ function RouteComponent() {
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-8">
           <SearchStats />
-          <div className="flex items-center gap-3">
-            <p className="text-sm font-medium text-[#4e7397]">Sort by:</p>
-            <SortBySelect indexName={indexName} />
+          <div className="flex items-center gap-4">
+            <SearchBox
+              placeholder="Search diapers..."
+              classNames={{
+                root: 'relative',
+                form: 'relative',
+                input: 'w-64 h-10 pl-10 pr-4 rounded-lg border border-[#e7edf3] dark:border-slate-700 bg-white dark:bg-slate-800 text-sm text-[#0e141b] dark:text-white placeholder:text-slate-400 focus:ring-primary focus:border-primary',
+                submit: 'absolute left-3 top-1/2 -translate-y-1/2 text-[#4e7397]',
+                submitIcon: 'w-4 h-4',
+                reset: 'absolute right-3 top-1/2 -translate-y-1/2 text-[#4e7397] hover:text-[#0e141b]',
+                resetIcon: 'w-4 h-4',
+                loadingIndicator: 'absolute right-3 top-1/2 -translate-y-1/2',
+              }}
+            />
+            <div className="flex items-center gap-3">
+              <p className="text-sm font-medium text-[#4e7397]">Sort by:</p>
+              <SortBySelect indexName={indexName} />
+            </div>
           </div>
         </div>
 
