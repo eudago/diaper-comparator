@@ -81,7 +81,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ hit }) => {
                 <div className="py-2 border-y border-[#f1f5f9] dark:border-slate-700">
                     <div className="flex items-baseline gap-1">
                         <span className="text-2xl font-black text-primary">
-                            €{hit.pricePerUnit.toFixed(2)}
+                            €{hit.pricePerUnit?.toFixed(2)}
                         </span>
                         <span className="text-sm font-medium text-[#4e7397]">/ unit</span>
                     </div>

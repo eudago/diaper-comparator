@@ -1,5 +1,5 @@
 import { Effect, Layer } from 'effect'
-import { WalmartScraper } from '../src/scrapers/sources/WalmartScraper'
+import { TargetScraper } from '../src/scrapers/sources/TargetScraper'
 import { persistOffers } from '../src/scrapers/persistOffers'
 import { layer as SqlLayer } from '../src/db/SqlLive'
 import { MeilisearchLive } from '../src/services/Meilisearch'
@@ -9,7 +9,7 @@ const program = Effect.gen(function* () {
     // Initialize Meilisearch (setup index/settings)
     yield* initMeilisearch()
 
-    const scraper = WalmartScraper
+    const scraper = TargetScraper
 
     console.log(`Running ${scraper.retailerName} scraper...`)
 
@@ -20,7 +20,7 @@ const program = Effect.gen(function* () {
     // Persist to database (this now includes Meilisearch sync)
     const result = yield* persistOffers(offers, {
         retailerName: scraper.retailerName,
-        retailerUrl: 'https://www.walmart.com',
+        retailerUrl: 'https://www.target.com',
         country: scraper.country,
     })
 
