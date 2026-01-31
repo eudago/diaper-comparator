@@ -37,7 +37,32 @@ const config = defineConfig({
     sourcemap: false,
     // Increase chunk size warning limit
     chunkSizeWarningLimit: 1000,
+    // Use esbuild for minification (faster than terser)
+    minify: 'esbuild',
+    // Reduce parallelism to lower memory usage on constrained servers
+    rollupOptions: {
+      output: {
+        // Manual chunking to help with memory during build
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom'],
+          'tanstack-router': ['@tanstack/react-router'],
+          'tanstack-query': ['@tanstack/react-query'],
+          'search': ['react-instantsearch', 'algoliasearch'],
+        },
+      },
+      // Reduce memory pressure
+      maxParallelFileOps: 2,
+    },
+    // Target modern browsers only to reduce output size
+    target: 'esnext',
   },
+  // Optimize dependency pre-bundling
+  optimizeDeps: {
+    // Force include commonly used deps
+    include: ['react', 'react-dom'],
+  },
+  // Reduce logging overhead in CI/production builds
+  logLevel: isProduction ? 'warn' : 'info',
 })
 
 export default config

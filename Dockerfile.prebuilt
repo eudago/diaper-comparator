@@ -1,0 +1,55 @@
+# =============================================================================
+# Dockerfile for pre-built frontend (use when server has limited resources)
+# =============================================================================
+#
+# INSTRUCTIONS:
+# 1. Build the frontend locally first:
+#    cd frontend && pnpm install && pnpm build
+#
+# 2. Before building, replace .dockerignore temporarily:
+#    cp .dockerignore .dockerignore.backup
+#    cp .dockerignore.prebuilt .dockerignore
+#
+# 3. Build and run with docker compose:
+#    docker compose -f docker-compose.prebuilt.yml up --build -d
+#
+# 4. Restore original .dockerignore:
+#    mv .dockerignore.backup .dockerignore
+#
+# =============================================================================
+
+# Stage 1: Build Backend only
+FROM node:20-slim AS backend-builder
+WORKDIR /app/backend
+
+# Install bun (needed for building) and pnpm
+RUN npm install -g bun pnpm
+
+# Copy backend source code
+COPY backend .
+
+# Install dependencies using pnpm (respects pnpm-lock.yaml and workspaces)
+RUN pnpm install --frozen-lockfile
+
+# Build the workspace (dependencies first, then server)
+RUN pnpm run build
+
+# Stage 2: Production Runner
+FROM oven/bun:latest
+WORKDIR /app
+
+# Copy the bundled server
+COPY --from=backend-builder /app/backend/apps/server/dist/main.js ./server.js
+
+# Copy the pre-built frontend static files from local build
+# NOTE: frontend/dist must exist (run `cd frontend && pnpm build` locally first)
+COPY frontend/dist ./public
+
+# Set environment variable for port
+ENV PORT=3050
+
+# Expose the port
+EXPOSE 3050
+
+# Command to run the server
+CMD ["bun", "server.js"]

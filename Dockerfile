@@ -14,10 +14,16 @@ RUN pnpm install
 # Copy frontend source code
 COPY frontend .
 
-# Build the frontend with memory limits to prevent hanging on low-resource servers
-# NODE_OPTIONS limits heap memory, and we disable source maps to reduce memory usage
-ENV NODE_OPTIONS="--max-old-space-size=1024"
-RUN pnpm run build
+# Build the frontend with aggressive memory limits to prevent hanging on low-resource servers
+# - max-old-space-size: Limit V8 heap memory to 512MB
+# - Disable source maps generation
+# - Set production mode explicitly
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV NODE_ENV=production
+ENV GENERATE_SOURCEMAP=false
+
+# Run build with reduced parallelism
+RUN node --max-old-space-size=512 ./node_modules/vite/bin/vite.js build
 
 # Stage 2: Build Backend
 FROM node:20-slim AS backend-builder
