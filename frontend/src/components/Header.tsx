@@ -4,6 +4,7 @@ import { getLocale } from '@/paraglide/runtime'
 
 export default function Header() {
   const [isDark, setIsDark] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     // On mount, check if dark mode is preferred or previously saved
@@ -33,6 +34,14 @@ export default function Header() {
     }
   }
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false)
+  }
+
   return (
     <>
       <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7edf3] dark:border-slate-800 px-6 py-4 lg:px-40 bg-white dark:bg-background-dark sticky top-0 z-50">
@@ -54,7 +63,7 @@ export default function Header() {
             DiaperCompare
           </h2>
         </Link>
-        <div className="flex flex-1 justify-end gap-8 items-center">
+        <div className="flex flex-1 justify-end gap-4 md:gap-8 items-center">
           <nav className="hidden md:flex items-center gap-8">
             <Link
               to="/$locale/compare"
@@ -94,8 +103,69 @@ export default function Header() {
               {isDark ? 'light_mode' : 'dark_mode'}
             </span>
           </button>
+          {/* Mobile menu button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            aria-label="Toggle mobile menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="material-symbols-outlined text-[#0e141b] dark:text-slate-300">
+              {isMobileMenuOpen ? 'close' : 'menu'}
+            </span>
+          </button>
         </div>
       </header>
+
+      {/* Mobile menu overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={closeMobileMenu}
+        />
+      )}
+
+      {/* Mobile menu drawer */}
+      <nav
+        className={`fixed top-[65px] right-0 h-[calc(100vh-65px)] w-64 bg-white dark:bg-background-dark border-l border-[#e7edf3] dark:border-slate-800 z-50 transform transition-transform duration-300 ease-in-out md:hidden ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col p-6 gap-4">
+          <Link
+            to="/$locale/compare"
+            params={{ locale: getLocale() }}
+            onClick={closeMobileMenu}
+            className="text-[#0e141b] dark:text-slate-300 text-base font-medium hover:text-primary transition-colors py-2"
+          >
+            Compare
+          </Link>
+          <Link
+            to="/$locale/deals"
+            params={{ locale: getLocale() }}
+            onClick={closeMobileMenu}
+            className="text-[#0e141b] dark:text-slate-300 text-base font-medium hover:text-primary transition-colors py-2"
+          >
+            Deals
+          </Link>
+          <Link
+            to="/$locale/brands"
+            params={{ locale: getLocale() }}
+            onClick={closeMobileMenu}
+            className="text-[#0e141b] dark:text-slate-300 text-base font-medium hover:text-primary transition-colors py-2"
+          >
+            Brands
+          </Link>
+          <Link
+            to="/$locale/buying-guide"
+            params={{ locale: getLocale() }}
+            onClick={closeMobileMenu}
+            className="text-[#0e141b] dark:text-slate-300 text-base font-medium hover:text-primary transition-colors py-2"
+          >
+            Buying Guide
+          </Link>
+        </div>
+      </nav>
     </>
   )
 }
