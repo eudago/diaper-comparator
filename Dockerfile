@@ -14,7 +14,9 @@ RUN pnpm install
 # Copy frontend source code
 COPY frontend .
 
-# Build the frontend
+# Build the frontend with memory limits to prevent hanging on low-resource servers
+# NODE_OPTIONS limits heap memory, and we disable source maps to reduce memory usage
+ENV NODE_OPTIONS="--max-old-space-size=1024"
 RUN pnpm run build
 
 # Stage 2: Build Backend

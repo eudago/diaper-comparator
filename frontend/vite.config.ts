@@ -8,6 +8,8 @@ import { fileURLToPath, URL } from 'url'
 
 import tailwindcss from '@tailwindcss/vite'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const config = defineConfig({
   resolve: {
     alias: {
@@ -15,7 +17,8 @@ const config = defineConfig({
     },
   },
   plugins: [
-    devtools(),
+    // Only include devtools in development to reduce memory usage during build
+    ...(!isProduction ? [devtools()] : []),
     paraglideVitePlugin({
       project: './project.inlang',
       outdir: './src/paraglide',
@@ -29,6 +32,12 @@ const config = defineConfig({
     TanStackRouterVite(),
     viteReact(),
   ],
+  build: {
+    // Reduce memory usage during build
+    sourcemap: false,
+    // Increase chunk size warning limit
+    chunkSizeWarningLimit: 1000,
+  },
 })
 
 export default config
