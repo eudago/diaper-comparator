@@ -6,10 +6,10 @@ import ProductCard from '@/components/deals/ProductCard'
 import { useState } from 'react'
 
 const { searchClient } = instantMeiliSearch(
-  //'https://meilisearch.movieimpostor.site',
-  'http://localhost:7700',
-  //'fa97bf7b6be21c224537075120904e06d66d677d9d3a9802442a615cfb34dd22'
-  '198e86bc8d48a97e7c5cf5f0367faf4388d57f82c2767c311b8f7e115b9fb9fb'
+  'https://meilisearch.movieimpostor.site',
+  //'http://localhost:7700',
+  'fa97bf7b6be21c224537075120904e06d66d677d9d3a9802442a615cfb34dd22'
+  //'198e86bc8d48a97e7c5cf5f0367faf4388d57f82c2767c311b8f7e115b9fb9fb'
 ) as any
 
 export const Route = createFileRoute('/$locale/deals/')({
@@ -79,7 +79,7 @@ function MobileFilterDrawer({ isOpen, onClose, children }: { isOpen: boolean; on
           onClick={onClose}
         />
       )}
-      
+
       {/* Drawer */}
       <div
         className={`fixed inset-y-0 left-0 w-80 max-w-[85vw] bg-[#f8fafb] dark:bg-slate-900 z-50 transform transition-transform duration-300 ease-in-out lg:hidden overflow-y-auto ${
@@ -123,7 +123,7 @@ function RouteComponent() {
         {/* Header section */}
         <div className="flex flex-col gap-4 mb-6 md:mb-8">
           <SearchStats />
-          
+
           {/* Search and Sort controls */}
           <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
@@ -155,10 +155,10 @@ function RouteComponent() {
           <aside className="hidden lg:block w-64 shrink-0">
             <Sidebar />
           </aside>
-          
+
           {/* Mobile Filter Drawer */}
-          <MobileFilterDrawer 
-            isOpen={isFilterDrawerOpen} 
+          <MobileFilterDrawer
+            isOpen={isFilterDrawerOpen}
             onClose={() => setIsFilterDrawerOpen(false)}
           >
             <Sidebar />
